@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 direction;
     private KeyCode StandUpKey;
 
+    private Vector3 lastPosition;
+
     private List<KeyCode> KeyBuffer = new List<KeyCode>();
 
     // Update is called once per frame
@@ -100,7 +102,11 @@ public class PlayerMovement : MonoBehaviour
                 movingPercentage += Time.deltaTime * speed;
             }
             else
-            {
+            {   
+                if (movingPercentage == 0.0f)
+                {
+                    lastPosition = transform.position;
+                }
                 movingPercentage += Time.deltaTime * speed;
                 transform.position = transform.position + speed * direction * Time.deltaTime;
             }
@@ -108,8 +114,8 @@ public class PlayerMovement : MonoBehaviour
         if (movingPercentage >= 1.0f)
         {
             movingPercentage = 0.0f;
-            KeyBuffer.RemoveAt(0);
-            // round to not fall from grid 
+            // KeyBuffer.RemoveAt(0);
+            // round to not fall from grid - proprably already solved elsewhere?
             float x = Convert.ToInt32(transform.position.x * 10) / 10.0f;
             float y = Convert.ToInt32(transform.position.y * 10) / 10.0f;
             float z = Convert.ToInt32(transform.position.z * 10) / 10.0f;
@@ -151,6 +157,14 @@ public class PlayerMovement : MonoBehaviour
         }
         return false;
         
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        KeyBuffer.Clear();
+        transform.position = lastPosition;
+        movingPercentage = 0.0f;
+
     }
 
 }
