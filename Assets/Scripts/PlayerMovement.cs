@@ -162,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         KeyBuffer.Clear();
+        Debug.Log(other.gameObject.name);
         transform.position = lastPosition;
         movingPercentage = 0.0f;
 
