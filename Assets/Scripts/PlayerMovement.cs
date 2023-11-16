@@ -201,6 +201,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        // check for collidable objects
+        if (!other.CompareTag("Collidable")){
+            return;
+        }
+
         KeyBuffer.Clear();
         Debug.Log(other.gameObject.name);
         Debug.Log(StandUpKey);
