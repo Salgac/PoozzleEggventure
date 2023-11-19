@@ -5,30 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class LevelTrigger : MonoBehaviour
 {
-
     public string levelToLoad;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    void Start() { }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    
+    void Update() { }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Finish!");
-            
-            //TODO SceneManager.LoadScene(levelToLoad);
+            Debug.Log("Finish! " + SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(levelToLoad);
         }
     }
 }
