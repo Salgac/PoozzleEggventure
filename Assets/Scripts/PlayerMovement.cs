@@ -19,12 +19,9 @@ public class PlayerMovement : MonoBehaviour
 
     private List<KeyCode> KeyBuffer = new List<KeyCode>();
 
-    
-
     // Update is called once per frame
     void Update()
     {
-        
         // set direction vector
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -42,10 +39,10 @@ public class PlayerMovement : MonoBehaviour
         {
             KeyBuffer.Add(KeyCode.D);
         }
-        
+
         // 2 types of movement
         if (standing && KeyBuffer.Count > 0)
-        {   
+        {
             LayDown();
         }
         if (!standing && KeyBuffer.Count > 0)
@@ -58,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
                 Roll();
                 AcceptKey = true;
             }
-                
+
             if (state.x != 0 && (KeyBuffer[0] == KeyCode.A || KeyBuffer[0] == KeyCode.D))
             {
                 Roll();
@@ -69,15 +66,12 @@ public class PlayerMovement : MonoBehaviour
                 if (StandUp())
                     AcceptKey = true;
             }
-                
 
-
-            if (!AcceptKey) KeyBuffer.Clear();
+            if (!AcceptKey)
+                KeyBuffer.Clear();
         }
-
-        
-
     }
+
     private void Roll()
     {
         Debug.Log(KeyBuffer.Count);
@@ -86,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
             switch (KeyBuffer[0])
             {
                 case (KeyCode.W):
-                    direction = new Vector3(0,0,1.0f);
+                    direction = new Vector3(0, 0, 1.0f);
                     break;
                 case (KeyCode.S):
                     direction = new Vector3(0, 0, -1.0f);
@@ -105,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
                 movingPercentage += Time.deltaTime * speed;
             }
             else
-            {   
+            {
                 if (movingPercentage == 0.0f)
                 {
                     lastPosition = transform.position;
@@ -137,8 +131,8 @@ public class PlayerMovement : MonoBehaviour
             case (KeyCode.W):
                 StandUpKey = KeyCode.S;
                 transform.position += new Vector3(0, 0, 1);
-                transform.Rotate(90,0,0);
-                
+                transform.Rotate(90, 0, 0);
+
                 break;
             case (KeyCode.S):
                 StandUpKey = KeyCode.W;
@@ -159,50 +153,50 @@ public class PlayerMovement : MonoBehaviour
         standing = false;
         KeyBuffer.RemoveAt(0);
     }
+
     private Boolean StandUp()
     {
-        
-        if (KeyBuffer[0] == StandUpKey) {
+        if (KeyBuffer[0] == StandUpKey)
+        {
             lastPosition = transform.position;
             lastRotation = transform.eulerAngles;
             transform.rotation = Quaternion.identity;
-            standing = true;      
+            standing = true;
             switch (KeyBuffer[0])
             {
                 case (KeyCode.W):
                     transform.Rotate(0, 0, 0);
                     transform.position += new Vector3(0, 0, 1);
-                    
 
                     break;
                 case (KeyCode.S):
                     transform.Rotate(0, 0, 0);
                     transform.position += new Vector3(0, 0, -1);
-                    
+
                     break;
                 case (KeyCode.A):
                     transform.Rotate(0, 0, 0);
                     transform.position += new Vector3(-1, 0, 0);
-                    
+
                     break;
                 case (KeyCode.D):
                     transform.Rotate(0, 0, 0);
                     transform.position += new Vector3(1, 0, 0);
-                    
+
                     break;
             }
-            
+
             KeyBuffer.RemoveAt(0);
             return true;
         }
         return false;
-        
     }
 
     public void OnTriggerEnter(Collider other)
     {
         // check for collidable objects
-        if (!other.CompareTag("Collidable")){
+        if (!other.CompareTag("Collidable"))
+        {
             return;
         }
 
@@ -216,14 +210,13 @@ public class PlayerMovement : MonoBehaviour
         transform.Rotate(lastRotation);
 
         if (lastRotation == new Vector3(0, 0, 0))
-        {   
+        {
             standing = true;
-        } else
+        }
+        else
         {
             standing = false;
         }
         movingPercentage = 0.0f;
-
     }
-
 }
