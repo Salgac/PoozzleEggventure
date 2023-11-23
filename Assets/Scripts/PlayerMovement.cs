@@ -76,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
     private void Roll()
     {
         //Debug.Log(KeyBuffer.Count);
@@ -84,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
             switch (KeyBuffer[0])
             {
                 case (KeyCode.W):
-                    direction = new Vector3(0,0,1.0f);
+                    direction = new Vector3(0, 0, 1.0f);
                     break;
                 case (KeyCode.S):
                     direction = new Vector3(0, 0, -1.0f);
@@ -103,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
                 movingPercentage += Time.deltaTime * speed;
             }
             else
-            {   
+            {
                 if (movingPercentage == 0.0f)
                 {
                     lastPosition = transform.position;
@@ -218,6 +219,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        // check for collidable objects
+        if (!other.CompareTag("Collidable"))
+        {
+            return;
+        }
+
         KeyBuffer.Clear();
         //Debug.Log(other.gameObject.name);
         //Debug.Log(StandUpKey);
@@ -228,14 +235,13 @@ public class PlayerMovement : MonoBehaviour
         transform.Rotate(lastRotation);
 
         if (lastRotation == new Vector3(0, 0, 0))
-        {   
+        {
             standing = true;
-        } else
+        }
+        else
         {
             standing = false;
         }
         movingPercentage = 0.0f;
-
     }
-
 }
