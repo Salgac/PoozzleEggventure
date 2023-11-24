@@ -22,6 +22,13 @@ public class PlayerMovement : MonoBehaviour
     public float transitionTime = 0.5f;
     private bool isTransitioning = false;
 
+    private GameObject thiccAssVajicko;
+
+    void Start()
+    {
+        thiccAssVajicko = transform.Find("Thicc_ass_vajicko").gameObject;
+    }
+
     // Update is called once per frame
     void Update()
     {    
@@ -82,19 +89,24 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(KeyBuffer.Count);
         if (KeyBuffer.Count > 0)
         {
+            float rotationAmount = 5.0f;
             switch (KeyBuffer[0])
             {
                 case (KeyCode.W):
                     direction = new Vector3(0, 0, 1.0f);
+                    thiccAssVajicko.transform.Rotate(rotationAmount, 0, 0, Space.World);
                     break;
                 case (KeyCode.S):
                     direction = new Vector3(0, 0, -1.0f);
+                    thiccAssVajicko.transform.Rotate(-rotationAmount, 0, 0, Space.World);
                     break;
                 case (KeyCode.A):
                     direction = new Vector3(-1.0f, 0, 0);
+                    thiccAssVajicko.transform.Rotate(0, 0, rotationAmount, Space.World);
                     break;
                 case (KeyCode.D):
                     direction = new Vector3(1.0f, 0, 0);
+                    thiccAssVajicko.transform.Rotate(0, 0, -rotationAmount, Space.World);
                     break;
             }
             if (movingPercentage + Time.deltaTime >= 1.0f)
@@ -124,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
             float z = Convert.ToInt32(transform.position.z * 10) / 10.0f;
             transform.position = new Vector3(x, y, z);
         }
-    }
+    }   
 
     private IEnumerator LayDown()
     {
