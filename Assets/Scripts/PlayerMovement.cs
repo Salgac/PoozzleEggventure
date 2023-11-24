@@ -5,12 +5,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 1.0f;
-    private float movingPercentage = 0.0f;
-    private float correctionDelta;
+    [SerializeField] private float speed = 4.0f;
 
     private bool standing = true;
-    private Vector3 direction;
     private KeyCode StandUpKey;
 
     private Vector3 lastPosition = new Vector3(-0.5f, 1.5f, 0.5f);
@@ -20,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
 
     public float transitionTime = 0.5f;
     private bool isTransitioning = false;
-    private Coroutine LayDownCoroutine;
 
     private GameObject thiccAssVajicko;
 
@@ -60,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 lastPosition = transform.position;
                 lastRotation = transform.rotation.eulerAngles;
-                LayDownCoroutine = StartCoroutine(LayDown());
+                StartCoroutine(LayDown());
             }
             if (!standing && KeyBuffer.Count > 0)
             {
@@ -69,13 +65,17 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 state = transform.rotation.eulerAngles;
                 if (state.z != 0 && (KeyBuffer[0] == KeyCode.W || KeyBuffer[0] == KeyCode.S))
                 {
-                    Roll();
+                    lastPosition = transform.position;
+                    lastRotation = transform.rotation.eulerAngles;
+                    StartCoroutine(Rolling());
                     AcceptKey = true;
                 }
                     
                 if (state.x != 0 && (KeyBuffer[0] == KeyCode.A || KeyBuffer[0] == KeyCode.D))
                 {
-                    Roll();
+                    lastPosition = transform.position;
+                    lastRotation = transform.rotation.eulerAngles;
+                    StartCoroutine(Rolling());
                     AcceptKey = true;
                 }
                 if (!AcceptKey)
@@ -88,60 +88,56 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Roll()
+    private IEnumerator Rolling()
     {
-        //Debug.Log(KeyBuffer.Count);
+        Vector3 startPosition = transform.position;
+        Quaternion startRotation = transform.rotation;
+        Vector3 endPosition = startPosition;
+        Quaternion endRotation = Quaternion.identity;
+        isTransitioning = true;
         if (KeyBuffer.Count > 0)
         {
-            float rotationAmount = 2.0f;
+            float rotationAmount = speed;
             switch (KeyBuffer[0])
             {
                 case (KeyCode.W):
-                    direction = new Vector3(0, 0, 1.0f);
-                    thiccAssVajicko.transform.Rotate(rotationAmount, 0, 0, Space.World);
+                    endPosition += new Vector3(0, 0, 1.0f);
                     break;
                 case (KeyCode.S):
-                    direction = new Vector3(0, 0, -1.0f);
-                    thiccAssVajicko.transform.Rotate(-rotationAmount, 0, 0, Space.World);
+                    endPosition += new Vector3(0, 0, -1.0f);
                     break;
                 case (KeyCode.A):
-                    direction = new Vector3(-1.0f, 0, 0);
-                    thiccAssVajicko.transform.Rotate(0, 0, rotationAmount, Space.World);
+                    endPosition += new Vector3(-1.0f, 0, 0);
                     break;
                 case (KeyCode.D):
-                    direction = new Vector3(1.0f, 0, 0);
-                    thiccAssVajicko.transform.Rotate(0, 0, -rotationAmount, Space.World);
+                    endPosition += new Vector3(1.0f, 0, 0);
                     break;
             }
-            // movement miscalculation
-            if (movingPercentage + Time.deltaTime * speed >= 1.0f)
+
+            for (float t = 0.0f; t < 1.0f; t += Time.deltaTime * speed)
             {
-                correctionDelta = 1.0f - movingPercentage;
-                transform.position = transform.position + correctionDelta * speed * direction;
-                movingPercentage += Time.deltaTime * speed;
-            }
-            else
-            {
-                if (movingPercentage == 0.0f)
+                transform.position = Vector3.Lerp(startPosition, endPosition, t);
+                switch (KeyBuffer[0])
                 {
-                    lastPosition = transform.position;
-                    lastRotation = transform.rotation.eulerAngles;
+                    case (KeyCode.W):
+                        thiccAssVajicko.transform.Rotate(rotationAmount, 0, 0, Space.World);
+                        break;
+                    case (KeyCode.S):
+                        thiccAssVajicko.transform.Rotate(-rotationAmount, 0, 0, Space.World);
+                        break;
+                    case (KeyCode.A):
+                        thiccAssVajicko.transform.Rotate(0, 0, rotationAmount, Space.World);
+                        break;
+                    case (KeyCode.D):
+                        thiccAssVajicko.transform.Rotate(0, 0, -rotationAmount, Space.World);
+                        break;
                 }
-                movingPercentage += Time.deltaTime * speed;
-                transform.position = transform.position + speed * direction * Time.deltaTime;
+                yield return null;
             }
+            isTransitioning = false;
+            transform.position = endPosition;
         }
-        if (movingPercentage >= 1.0f)
-        {
-            movingPercentage = 0.0f;
-            // KeyBuffer.RemoveAt(0);
-            // round to not fall from grid - proprably already solved elsewhere?
-            float x = Convert.ToInt32(transform.position.x * 10) / 10.0f;
-            float y = Convert.ToInt32(transform.position.y * 10) / 10.0f;
-            float z = Convert.ToInt32(transform.position.z * 10) / 10.0f;
-            transform.position = new Vector3(x, y, z);
-        }
-    }   
+    }
 
     private IEnumerator LayDown()
     {
@@ -244,7 +240,8 @@ public class PlayerMovement : MonoBehaviour
         }
         // LayDown into object hotfix? or Fix?
         if (other.gameObject.transform.position.y >= 1)
-        {   
+        {
+            Debug.Log(other.gameObject.name);
             if (isTransitioning)
             {
                 StopAllCoroutines();
@@ -263,7 +260,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 standing = false;
             }
-            movingPercentage = 0.0f;
             KeyBuffer.Clear();
 
         } 
