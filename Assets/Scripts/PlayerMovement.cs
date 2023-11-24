@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 1.0f;
-    private float rotation_speed = 1.0f;
     private float movingPercentage = 0.0f;
     private float correctionDelta;
 
@@ -21,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float transitionTime = 0.5f;
     private bool isTransitioning = false;
+    private Coroutine LayDownCoroutine;
 
     private GameObject thiccAssVajicko;
 
@@ -57,8 +57,10 @@ public class PlayerMovement : MonoBehaviour
         if (!isTransitioning) {
             // 2 types of movement
             if (standing && KeyBuffer.Count > 0)
-            {   
-                StartCoroutine(LayDown());
+            {
+                lastPosition = transform.position;
+                lastRotation = transform.rotation.eulerAngles;
+                LayDownCoroutine = StartCoroutine(LayDown());
             }
             if (!standing && KeyBuffer.Count > 0)
             {
@@ -78,6 +80,8 @@ public class PlayerMovement : MonoBehaviour
                 }
                 if (!AcceptKey)
                 {
+                    lastPosition = transform.position;
+                    lastRotation = transform.rotation.eulerAngles;
                     StartCoroutine(StandUp());
                 }
             }
@@ -89,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(KeyBuffer.Count);
         if (KeyBuffer.Count > 0)
         {
-            float rotationAmount = 5.0f;
+            float rotationAmount = 2.0f;
             switch (KeyBuffer[0])
             {
                 case (KeyCode.W):
@@ -109,10 +113,11 @@ public class PlayerMovement : MonoBehaviour
                     thiccAssVajicko.transform.Rotate(0, 0, -rotationAmount, Space.World);
                     break;
             }
-            if (movingPercentage + Time.deltaTime >= 1.0f)
+            // movement miscalculation
+            if (movingPercentage + Time.deltaTime * speed >= 1.0f)
             {
                 correctionDelta = 1.0f - movingPercentage;
-                transform.position = transform.position + speed * direction * correctionDelta;
+                transform.position = transform.position + correctionDelta * speed * direction;
                 movingPercentage += Time.deltaTime * speed;
             }
             else
@@ -234,26 +239,33 @@ public class PlayerMovement : MonoBehaviour
         // check for collidable objects
         if (!other.CompareTag("Collidable"))
         {
+            
             return;
         }
+        // LayDown into object hotfix? or Fix?
+        if (other.gameObject.transform.position.y >= 1)
+        {   
+            if (isTransitioning)
+            {
+                StopAllCoroutines();
+                isTransitioning = false;
+            }
 
-        KeyBuffer.Clear();
-        //Debug.Log(other.gameObject.name);
-        //Debug.Log(StandUpKey);
-        //Debug.Log(standing);
+            transform.position = lastPosition;
+            transform.rotation = Quaternion.identity;
+            transform.Rotate(lastRotation);
 
-        transform.position = lastPosition;
-        transform.rotation = Quaternion.identity;
-        transform.Rotate(lastRotation);
+            if (lastRotation == new Vector3(0, 0, 0))
+            {
+                standing = true;
+            }
+            else
+            {
+                standing = false;
+            }
+            movingPercentage = 0.0f;
+            KeyBuffer.Clear();
 
-        if (lastRotation == new Vector3(0, 0, 0))
-        {
-            standing = true;
-        }
-        else
-        {
-            standing = false;
-        }
-        movingPercentage = 0.0f;
+        } 
     }
 }
