@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
-public class VideoPlayer : MonoBehaviour
+public class StoryVideoPlayer : MonoBehaviour
 {
-    public UnityEngine.Video.VideoPlayer videoPlayer;
+    public VideoPlayer videoPlayer;
+    public LevelManager manager;
     public string levelToLoad;
 
     private long videoLength;
@@ -27,6 +26,6 @@ public class VideoPlayer : MonoBehaviour
 
     void EndReached()
     {
-        SceneManager.LoadScene(levelToLoad);
+        manager.FadeToLevel(levelToLoad);
     }
 }
