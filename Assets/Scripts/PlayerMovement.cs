@@ -5,13 +5,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 1.0f;
-    private float rotation_speed = 1.0f;
-    private float movingPercentage = 0.0f;
-    private float correctionDelta;
+    [SerializeField] private float speed = 4.0f;
 
     private bool standing = true;
-    private Vector3 direction;
     private KeyCode StandUpKey;
 
     private Vector3 lastPosition = new Vector3(-0.5f, 1.5f, 0.5f);
@@ -21,6 +17,13 @@ public class PlayerMovement : MonoBehaviour
 
     public float transitionTime = 0.5f;
     private bool isTransitioning = false;
+
+    private GameObject thiccAssVajicko;
+
+    void Start()
+    {
+        thiccAssVajicko = transform.Find("Thicc_ass_vajicko").gameObject;
+    }
 
     // Update is called once per frame
     void Update()
@@ -50,7 +53,9 @@ public class PlayerMovement : MonoBehaviour
         if (!isTransitioning) {
             // 2 types of movement
             if (standing && KeyBuffer.Count > 0)
-            {   
+            {
+                lastPosition = transform.position;
+                lastRotation = transform.rotation.eulerAngles;
                 StartCoroutine(LayDown());
             }
             if (!standing && KeyBuffer.Count > 0)
@@ -60,69 +65,77 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 state = transform.rotation.eulerAngles;
                 if (state.z != 0 && (KeyBuffer[0] == KeyCode.W || KeyBuffer[0] == KeyCode.S))
                 {
-                    Roll();
+                    lastPosition = transform.position;
+                    lastRotation = transform.rotation.eulerAngles;
+                    StartCoroutine(Rolling());
                     AcceptKey = true;
                 }
                     
                 if (state.x != 0 && (KeyBuffer[0] == KeyCode.A || KeyBuffer[0] == KeyCode.D))
                 {
-                    Roll();
+                    lastPosition = transform.position;
+                    lastRotation = transform.rotation.eulerAngles;
+                    StartCoroutine(Rolling());
                     AcceptKey = true;
                 }
                 if (!AcceptKey)
                 {
+                    lastPosition = transform.position;
+                    lastRotation = transform.rotation.eulerAngles;
                     StartCoroutine(StandUp());
                 }
             }
         }
     }
 
-    private void Roll()
+    private IEnumerator Rolling()
     {
-        //Debug.Log(KeyBuffer.Count);
+        Vector3 startPosition = transform.position;
+        Quaternion startRotation = transform.rotation;
+        Vector3 endPosition = startPosition;
+        Quaternion endRotation = Quaternion.identity;
+        isTransitioning = true;
         if (KeyBuffer.Count > 0)
         {
+            float rotationAmount = speed;
             switch (KeyBuffer[0])
             {
                 case (KeyCode.W):
-                    direction = new Vector3(0, 0, 1.0f);
+                    endPosition += new Vector3(0, 0, 1.0f);
                     break;
                 case (KeyCode.S):
-                    direction = new Vector3(0, 0, -1.0f);
+                    endPosition += new Vector3(0, 0, -1.0f);
                     break;
                 case (KeyCode.A):
-                    direction = new Vector3(-1.0f, 0, 0);
+                    endPosition += new Vector3(-1.0f, 0, 0);
                     break;
                 case (KeyCode.D):
-                    direction = new Vector3(1.0f, 0, 0);
+                    endPosition += new Vector3(1.0f, 0, 0);
                     break;
             }
-            if (movingPercentage + Time.deltaTime >= 1.0f)
+
+            for (float t = 0.0f; t < 1.0f; t += Time.deltaTime * speed)
             {
-                correctionDelta = 1.0f - movingPercentage;
-                transform.position = transform.position + speed * direction * correctionDelta;
-                movingPercentage += Time.deltaTime * speed;
-            }
-            else
-            {
-                if (movingPercentage == 0.0f)
+                transform.position = Vector3.Lerp(startPosition, endPosition, t);
+                switch (KeyBuffer[0])
                 {
-                    lastPosition = transform.position;
-                    lastRotation = transform.rotation.eulerAngles;
+                    case (KeyCode.W):
+                        thiccAssVajicko.transform.Rotate(rotationAmount, 0, 0, Space.World);
+                        break;
+                    case (KeyCode.S):
+                        thiccAssVajicko.transform.Rotate(-rotationAmount, 0, 0, Space.World);
+                        break;
+                    case (KeyCode.A):
+                        thiccAssVajicko.transform.Rotate(0, 0, rotationAmount, Space.World);
+                        break;
+                    case (KeyCode.D):
+                        thiccAssVajicko.transform.Rotate(0, 0, -rotationAmount, Space.World);
+                        break;
                 }
-                movingPercentage += Time.deltaTime * speed;
-                transform.position = transform.position + speed * direction * Time.deltaTime;
+                yield return null;
             }
-        }
-        if (movingPercentage >= 1.0f)
-        {
-            movingPercentage = 0.0f;
-            // KeyBuffer.RemoveAt(0);
-            // round to not fall from grid - proprably already solved elsewhere?
-            float x = Convert.ToInt32(transform.position.x * 10) / 10.0f;
-            float y = Convert.ToInt32(transform.position.y * 10) / 10.0f;
-            float z = Convert.ToInt32(transform.position.z * 10) / 10.0f;
-            transform.position = new Vector3(x, y, z);
+            isTransitioning = false;
+            transform.position = endPosition;
         }
     }
 
@@ -222,26 +235,33 @@ public class PlayerMovement : MonoBehaviour
         // check for collidable objects
         if (!other.CompareTag("Collidable"))
         {
+            
             return;
         }
-
-        KeyBuffer.Clear();
-        //Debug.Log(other.gameObject.name);
-        //Debug.Log(StandUpKey);
-        //Debug.Log(standing);
-
-        transform.position = lastPosition;
-        transform.rotation = Quaternion.identity;
-        transform.Rotate(lastRotation);
-
-        if (lastRotation == new Vector3(0, 0, 0))
+        // LayDown into object hotfix? or Fix?
+        if (other.gameObject.transform.position.y >= 1)
         {
-            standing = true;
-        }
-        else
-        {
-            standing = false;
-        }
-        movingPercentage = 0.0f;
+            Debug.Log(other.gameObject.name);
+            if (isTransitioning)
+            {
+                StopAllCoroutines();
+                isTransitioning = false;
+            }
+
+            transform.position = lastPosition;
+            transform.rotation = Quaternion.identity;
+            transform.Rotate(lastRotation);
+
+            if (lastRotation == new Vector3(0, 0, 0))
+            {
+                standing = true;
+            }
+            else
+            {
+                standing = false;
+            }
+            KeyBuffer.Clear();
+
+        } 
     }
 }
