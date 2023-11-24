@@ -9,15 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/VideoPlayer.unity
     guid: 5cfccd57d3c5842199a40dd72aa5e081
   - enabled: 1
-    path: Assets/Scenes/Level_01.unity
+    path: Assets/Scenes/Levels/Level_01.unity
     guid: 646c5cb2a15ad43c1bdccc759e15437a
   - enabled: 1
-    path: Assets/Scenes/Level_02.unity
+    path: Assets/Scenes/Levels/Level_02.unity
     guid: 8c60352d4c3f942ad9f092c92af15a69
   - enabled: 1
-    path: Assets/Scenes/Level_03.unity
+    path: Assets/Scenes/Levels/Level_03.unity
     guid: c05efc7a4d3bb429bbd4e534fcbee797
   - enabled: 1
-    path: Assets/Scenes/Level_xx.unity
+    path: Assets/Scenes/Levels/Level_xx.unity
     guid: bac6eb1d591bf4e1f92a090e8021489c
   m_configObjects: {}
