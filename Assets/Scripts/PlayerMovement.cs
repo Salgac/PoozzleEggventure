@@ -80,9 +80,16 @@ public class PlayerMovement : MonoBehaviour
                 }
                 if (!AcceptKey)
                 {
-                    lastPosition = transform.position;
-                    lastRotation = transform.rotation.eulerAngles;
-                    StartCoroutine(StandUp());
+                    if (KeyBuffer[0] == StandUpKey)
+                    {
+                        lastPosition = transform.position;
+                        lastRotation = transform.rotation.eulerAngles;
+                        StartCoroutine(StandUp());
+                    }
+                    else
+                    {
+                        KeyBuffer.RemoveAt(0);
+                    }
                 }
             }
         }
