@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -20,10 +22,20 @@ public class PlayerMovement : MonoBehaviour
     private bool isTransitioning = false;
 
     private GameObject thiccAssVajicko;
+    private List<GameObject> floorList;
 
     void Start()
     {
         thiccAssVajicko = transform.Find("Thicc_ass_vajicko").gameObject;
+        GameObject[] floor = GameObject.FindGameObjectsWithTag("Collidable");
+        floorList = floor.ToList();
+        
+        for (int i = floor.Length-1; i > 0; i--)
+        {
+            if (floor[i].transform.position.y > 0)
+                floorList.RemoveAt(i);
+        }
+        floor = floorList.ToArray();
     }
 
     // Update is called once per frame
@@ -109,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
         isTransitioning = true;
         if (KeyBuffer.Count > 0)
         {
-            float rotationAmount = speed;
+            float rotationAmount = speed / 2;
             switch (KeyBuffer[0])
             {
                 case (KeyCode.W):
@@ -148,6 +160,7 @@ public class PlayerMovement : MonoBehaviour
             }
             isTransitioning = false;
             transform.position = endPosition;
+            CheckUnder();
         }
     }
 
@@ -198,6 +211,7 @@ public class PlayerMovement : MonoBehaviour
             KeyBuffer.RemoveAt(0);
         }
         isTransitioning = false;
+        CheckUnder();
     }
     private IEnumerator StandUp()
     {
@@ -238,7 +252,8 @@ public class PlayerMovement : MonoBehaviour
                 KeyBuffer.RemoveAt(0);
             }
         }
-        isTransitioning = false; 
+        isTransitioning = false;
+        CheckUnder();
         yield return false;
     }
 
@@ -305,5 +320,30 @@ public class PlayerMovement : MonoBehaviour
             
 
         } 
+    }
+
+    public IEnumerator Reset()
+    {
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime * speed)
+        {
+            yield return null;
+        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void CheckUnder()
+    {
+
+        var under = floorList.Where(i => (i.transform.position.x == transform.position.x && i.transform.position.z == transform.position.z)).ToArray();
+        Debug.Log(under.Length);
+        if (under.Length <= 0)
+        {
+            StopAllCoroutines();
+            KeyBuffer.Clear();
+            gameObject.GetComponent<Rigidbody>().useGravity = true;
+            StartCoroutine(Reset());
+        }
+            
+        
     }
 }
