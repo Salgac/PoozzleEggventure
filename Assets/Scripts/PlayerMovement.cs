@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 lastPosition = new Vector3(-0.5f, 1.5f, 0.5f);
     private Vector3 lastRotation = new Vector3(0, 0, 0);
+    private Quaternion lastEggRotation;
 
     private List<KeyCode> KeyBuffer = new List<KeyCode>();
 
@@ -56,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 lastPosition = transform.position;
                 lastRotation = transform.rotation.eulerAngles;
+                lastEggRotation = thiccAssVajicko.transform.rotation;
                 StartCoroutine(LayDown());
             }
             if (!standing && KeyBuffer.Count > 0)
@@ -67,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     lastPosition = transform.position;
                     lastRotation = transform.rotation.eulerAngles;
+                    lastEggRotation = thiccAssVajicko.transform.rotation;
                     StartCoroutine(Rolling());
                     AcceptKey = true;
                 }
@@ -75,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     lastPosition = transform.position;
                     lastRotation = transform.rotation.eulerAngles;
+                    lastEggRotation = thiccAssVajicko.transform.rotation;
                     StartCoroutine(Rolling());
                     AcceptKey = true;
                 }
@@ -84,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
                     {
                         lastPosition = transform.position;
                         lastRotation = transform.rotation.eulerAngles;
+                        lastEggRotation = thiccAssVajicko.transform.rotation;
                         StartCoroutine(StandUp());
                     }
                     else
@@ -237,6 +242,35 @@ public class PlayerMovement : MonoBehaviour
         yield return false;
     }
 
+    private IEnumerator ReturnToLastPosition()
+    {
+        isTransitioning = true;
+        Vector3 startPosition = transform.position;
+        Quaternion startRotation = transform.rotation;
+        Vector3 endPosition = lastPosition;
+        Quaternion endRotation = Quaternion.identity;
+        endRotation = Quaternion.Euler(lastRotation);
+
+        Quaternion startEggRotation = thiccAssVajicko.transform.rotation;
+        Quaternion endEggRotation = lastEggRotation;
+
+        // Coroutine loop
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime * speed * 8)
+        {
+            // Internal egg rotation 
+            thiccAssVajicko.transform.rotation = Quaternion.Lerp(startEggRotation, endEggRotation, t);
+            // animation
+            transform.position = Vector3.Lerp(startPosition, endPosition, t);
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, t);
+            yield return null;
+        }
+
+        isTransitioning = false;
+        transform.position = endPosition;
+        transform.rotation = endRotation;
+        KeyBuffer.Clear();
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         // check for collidable objects
@@ -255,9 +289,10 @@ public class PlayerMovement : MonoBehaviour
                 isTransitioning = false;
             }
 
-            transform.position = lastPosition;
-            transform.rotation = Quaternion.identity;
-            transform.Rotate(lastRotation);
+            StartCoroutine(ReturnToLastPosition());
+            // transform.position = lastPosition;
+            // transform.rotation = Quaternion.identity;
+            // transform.Rotate(lastRotation);
 
             if (lastRotation == new Vector3(0, 0, 0))
             {
@@ -267,7 +302,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 standing = false;
             }
-            KeyBuffer.Clear();
+            
 
         } 
     }
