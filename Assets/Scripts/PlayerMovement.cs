@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 4.0f;
+    private float speed = 2.0f;
 
     private bool standing = true;
     private KeyCode StandUpKey;
@@ -115,47 +115,43 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator Rolling()
     {
         Vector3 startPosition = transform.position;
-        Quaternion startRotation = transform.rotation;
         Vector3 endPosition = startPosition;
-        Quaternion endRotation = Quaternion.identity;
+        Quaternion startEggRotation = thiccAssVajicko.transform.rotation;
+        Quaternion endEggRotation = thiccAssVajicko.transform.rotation;
+
         isTransitioning = true;
+        
         if (KeyBuffer.Count > 0)
         {
-            float rotationAmount = speed / 2;
             switch (KeyBuffer[0])
             {
                 case (KeyCode.W):
                     endPosition += new Vector3(0, 0, 1.0f);
+                    thiccAssVajicko.transform.Rotate(90, 0, 0, Space.World);
+                    endEggRotation = thiccAssVajicko.transform.rotation;
+                    
                     break;
                 case (KeyCode.S):
                     endPosition += new Vector3(0, 0, -1.0f);
+                    thiccAssVajicko.transform.Rotate(-90, 0, 0, Space.World);
+                    endEggRotation = thiccAssVajicko.transform.rotation;
                     break;
                 case (KeyCode.A):
                     endPosition += new Vector3(-1.0f, 0, 0);
+                    thiccAssVajicko.transform.Rotate(0, 0, 90, Space.World);
+                    endEggRotation = thiccAssVajicko.transform.rotation;
                     break;
                 case (KeyCode.D):
                     endPosition += new Vector3(1.0f, 0, 0);
+                    thiccAssVajicko.transform.Rotate(0, 0, -90, Space.World);
+                    endEggRotation = thiccAssVajicko.transform.rotation;
                     break;
             }
-
+            thiccAssVajicko.transform.rotation = startEggRotation;
             for (float t = 0.0f; t < 1.0f; t += Time.deltaTime * speed)
             {
                 transform.position = Vector3.Lerp(startPosition, endPosition, t);
-                switch (KeyBuffer[0])
-                {
-                    case (KeyCode.W):
-                        thiccAssVajicko.transform.Rotate(rotationAmount, 0, 0, Space.World);
-                        break;
-                    case (KeyCode.S):
-                        thiccAssVajicko.transform.Rotate(-rotationAmount, 0, 0, Space.World);
-                        break;
-                    case (KeyCode.A):
-                        thiccAssVajicko.transform.Rotate(0, 0, rotationAmount, Space.World);
-                        break;
-                    case (KeyCode.D):
-                        thiccAssVajicko.transform.Rotate(0, 0, -rotationAmount, Space.World);
-                        break;
-                }
+                thiccAssVajicko.transform.rotation = Quaternion.Lerp(startEggRotation, endEggRotation, t);
                 yield return null;
             }
             isTransitioning = false;
@@ -270,7 +266,7 @@ public class PlayerMovement : MonoBehaviour
         Quaternion endEggRotation = lastEggRotation;
 
         // Coroutine loop
-        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime * speed * 8)
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime * speed)
         {
             // Internal egg rotation 
             thiccAssVajicko.transform.rotation = Quaternion.Lerp(startEggRotation, endEggRotation, t);
