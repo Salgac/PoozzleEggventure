@@ -19,10 +19,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isTransitioning = false;
 
     private GameObject thiccAssVajicko;
+    private MovementBar movementBar;
 
     void Start()
     {
         thiccAssVajicko = transform.Find("Thicc_ass_vajicko").gameObject;
+        movementBar = FindObjectOfType<MovementBar>();
     }
 
     // Update is called once per frame
@@ -31,22 +33,18 @@ public class PlayerMovement : MonoBehaviour
         // set direction vector
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Debug.Log("Standing: " + standing + ", isTransitioning: " + isTransitioning + ", KeyBuffer Count: " + KeyBuffer.Count);
             KeyBuffer.Add(KeyCode.W);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Debug.Log("Standing: " + standing + ", isTransitioning: " + isTransitioning + ", KeyBuffer Count: " + KeyBuffer.Count);
             KeyBuffer.Add(KeyCode.S);
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("Standing: " + standing + ", isTransitioning: " + isTransitioning + ", KeyBuffer Count: " + KeyBuffer.Count);
             KeyBuffer.Add(KeyCode.A);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Debug.Log("Standing: " + standing + ", isTransitioning: " + isTransitioning + ", KeyBuffer Count: " + KeyBuffer.Count);
             KeyBuffer.Add(KeyCode.D);
         }
         
@@ -108,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
             switch (KeyBuffer[0])
             {
                 case (KeyCode.W):
-                    endPosition += new Vector3(0, 0, 1.0f);
+                    endPosition += new Vector3(0, 0, 1.0f);                    
                     break;
                 case (KeyCode.S):
                     endPosition += new Vector3(0, 0, -1.0f);
@@ -253,6 +251,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 StopAllCoroutines();
                 isTransitioning = false;
+            }
+            if (!standing)
+            {
+                movementBar.IncrementProgress();
             }
 
             transform.position = lastPosition;

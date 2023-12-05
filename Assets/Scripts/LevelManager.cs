@@ -18,6 +18,11 @@ public class LevelManager : MonoBehaviour
         animator.SetTrigger("FadeOut");
     }
 
+    public void ResetLevel()
+    {
+        FadeToLevel(SceneManager.GetActiveScene().name);
+    }
+
     public void OnFadeComplete()
     {
         SceneManager.LoadScene(levelToLoad);
