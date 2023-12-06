@@ -30,17 +30,32 @@ public class MovementBar : MonoBehaviour
         {
             slider.value += fillSpeed * Time.deltaTime;
         }
+        if (slider.value > targetProgress)
+        {
+            slider.value -= fillSpeed * Time.deltaTime;
+        }
     }
 
-    public void IncrementProgress()
+    public void IncrementProgress(int multiplier = 1)
     {
         float progress = slider.maxValue / maxNumberOfMoves;
-        targetProgress = slider.value + progress;
+        targetProgress = slider.value + multiplier * progress;
         if (targetProgress >= slider.maxValue)
         {
             targetProgress = 0;
             slider.value = 0;
             levelManager.ResetLevel();
+        }
+    }
+
+    public void DecrementProgress(int multiplier = 1)
+    {
+        float progress = slider.maxValue / maxNumberOfMoves;
+        targetProgress = slider.value - multiplier * progress;
+        if (targetProgress <= 0)
+        {
+            targetProgress = 0;
+            slider.value = 0;
         }
     }
 }
