@@ -6,6 +6,7 @@ public class LevelManager : MonoBehaviour
     public Animator animator;
     private string levelToLoad;
     private PlayerMovement playerMovement;
+    public Component shitCanvas;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,12 @@ public class LevelManager : MonoBehaviour
     public void ResetLevel()
     {
         FadeToLevel(SceneManager.GetActiveScene().name);
+    }
+
+    public void ApplyShitscreen()
+    {
+        // show shit overlay
+        shitCanvas.gameObject.SetActive(true);
     }
 
     public void OnFadeComplete()

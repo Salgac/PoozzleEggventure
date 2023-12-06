@@ -40,11 +40,15 @@ public class MovementBar : MonoBehaviour
     {
         float progress = slider.maxValue / maxNumberOfMoves;
         targetProgress = slider.value + multiplier * progress;
+
+        // bar is full
         if (targetProgress >= slider.maxValue - progress)
         {
             targetProgress = 0;
             slider.value = 0;
-            levelManager.ResetLevel();
+
+            // shit overlay
+            levelManager.ApplyShitscreen();
         }
     }
 
