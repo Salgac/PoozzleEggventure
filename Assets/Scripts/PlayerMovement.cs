@@ -73,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     lastPosition = transform.position;
                     lastRotation = transform.rotation.eulerAngles;
+                    
                     StartCoroutine(Rolling());
                     AcceptKey = true;
                 }
@@ -86,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else
                     {
+                        movementBar.IncrementProgress();
                         KeyBuffer.RemoveAt(0);
                     }
                 }
@@ -188,6 +190,7 @@ public class PlayerMovement : MonoBehaviour
         standing = false;
         if (KeyBuffer.Count > 0)
         {
+            movementBar.IncrementProgress();
             KeyBuffer.RemoveAt(0);
         }
         isTransitioning = false;
@@ -228,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
             standing = true;
             if (KeyBuffer.Count > 0)
             {
+                movementBar.IncrementProgress();
                 KeyBuffer.RemoveAt(0);
             }
         }
@@ -250,11 +254,8 @@ public class PlayerMovement : MonoBehaviour
             if (isTransitioning)
             {
                 StopAllCoroutines();
-                isTransitioning = false;
-            }
-            if (!standing)
-            {
                 movementBar.IncrementProgress();
+                isTransitioning = false;
             }
 
             transform.position = lastPosition;
