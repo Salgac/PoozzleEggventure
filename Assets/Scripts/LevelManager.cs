@@ -9,16 +9,19 @@ public class LevelManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-     { 
+    {
         playerMovement = FindObjectOfType<PlayerMovement>();
-     }
+    }
 
     // Update is called once per frame
     void Update() { }
 
     public void FadeToLevel(string levelToLoad)
     {
-        playerMovement.StopAllCoroutines();
+        if (playerMovement != null)
+        {
+            playerMovement.StopAllCoroutines();
+        }
         this.levelToLoad = levelToLoad;
         animator.SetTrigger("FadeOut");
     }
