@@ -22,11 +22,13 @@ public class PlayerMovement : MonoBehaviour
     private bool isTransitioning = false;
 
     private GameObject thiccAssVajicko;
+    private MovementBar movementBar;
     private List<GameObject> floorList;
 
     void Start()
     {
         thiccAssVajicko = transform.Find("Thicc_ass_vajicko").gameObject;
+        movementBar = FindObjectOfType<MovementBar>();
         GameObject[] floor = GameObject.FindGameObjectsWithTag("Collidable");
         floorList = floor.ToList();
         
@@ -44,22 +46,18 @@ public class PlayerMovement : MonoBehaviour
         // set direction vector
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Debug.Log("Standing: " + standing + ", isTransitioning: " + isTransitioning + ", KeyBuffer Count: " + KeyBuffer.Count);
             KeyBuffer.Add(KeyCode.W);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Debug.Log("Standing: " + standing + ", isTransitioning: " + isTransitioning + ", KeyBuffer Count: " + KeyBuffer.Count);
             KeyBuffer.Add(KeyCode.S);
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("Standing: " + standing + ", isTransitioning: " + isTransitioning + ", KeyBuffer Count: " + KeyBuffer.Count);
             KeyBuffer.Add(KeyCode.A);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Debug.Log("Standing: " + standing + ", isTransitioning: " + isTransitioning + ", KeyBuffer Count: " + KeyBuffer.Count);
             KeyBuffer.Add(KeyCode.D);
         }
         
@@ -105,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else
                     {
+                        movementBar.IncrementProgress();
                         KeyBuffer.RemoveAt(0);
                     }
                 }
@@ -129,7 +128,6 @@ public class PlayerMovement : MonoBehaviour
                     endPosition += new Vector3(0, 0, 1.0f);
                     thiccAssVajicko.transform.Rotate(90, 0, 0, Space.World);
                     endEggRotation = thiccAssVajicko.transform.rotation;
-                    
                     break;
                 case (KeyCode.S):
                     endPosition += new Vector3(0, 0, -1.0f);
@@ -204,6 +202,7 @@ public class PlayerMovement : MonoBehaviour
         standing = false;
         if (KeyBuffer.Count > 0)
         {
+            movementBar.IncrementProgress();
             KeyBuffer.RemoveAt(0);
         }
         isTransitioning = false;
@@ -245,6 +244,7 @@ public class PlayerMovement : MonoBehaviour
             standing = true;
             if (KeyBuffer.Count > 0)
             {
+                movementBar.IncrementProgress();
                 KeyBuffer.RemoveAt(0);
             }
         }
@@ -297,6 +297,7 @@ public class PlayerMovement : MonoBehaviour
             if (isTransitioning)
             {
                 StopAllCoroutines();
+                movementBar.IncrementProgress();
                 isTransitioning = false;
             }
 
