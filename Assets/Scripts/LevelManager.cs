@@ -5,15 +5,20 @@ public class LevelManager : MonoBehaviour
 {
     public Animator animator;
     private string levelToLoad;
+    private PlayerMovement playerMovement;
 
     // Start is called before the first frame update
-    void Start() { }
+    void Start()
+     { 
+        playerMovement = FindObjectOfType<PlayerMovement>();
+     }
 
     // Update is called once per frame
     void Update() { }
 
     public void FadeToLevel(string levelToLoad)
     {
+        playerMovement.StopAllCoroutines();
         this.levelToLoad = levelToLoad;
         animator.SetTrigger("FadeOut");
     }
