@@ -9,7 +9,7 @@ public class MovementBar : MonoBehaviour
 
     private float fillSpeed = 0.5f;
     public float targetProgress = 0;
-    public int maxNumberOfMoves = 10;
+    public int maxNumberOfMoves = 10; // add aditional move on each level to work corectly
 
     private LevelManager levelManager;
 
@@ -40,7 +40,7 @@ public class MovementBar : MonoBehaviour
     {
         float progress = slider.maxValue / maxNumberOfMoves;
         targetProgress = slider.value + multiplier * progress;
-        if (targetProgress >= slider.maxValue)
+        if (targetProgress >= slider.maxValue - progress)
         {
             targetProgress = 0;
             slider.value = 0;
