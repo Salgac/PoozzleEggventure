@@ -1,10 +1,8 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    public Animator animator;
     private string levelToLoad;
     private PlayerMovement playerMovement;
     public Component shitCanvas;
@@ -12,6 +10,7 @@ public class LevelManager : MonoBehaviour
 
     public MovementController movementBar;
     public EndLevelController endLevelController;
+    public FaderController faderController;
 
     private bool brown = false;
 
@@ -37,13 +36,13 @@ public class LevelManager : MonoBehaviour
     {
         StopPlayer();
         this.levelToLoad = levelToLoad;
-        animator.SetTrigger("FadeOut");
+        faderController.FadeOut(levelToLoad);
     }
 
     public void FadeToLevel()
     {
         StopPlayer();
-        animator.SetTrigger("FadeOut");
+        faderController.FadeOut(levelToLoad);
     }
 
     public void ResetLevel()
@@ -56,19 +55,6 @@ public class LevelManager : MonoBehaviour
         // show shit overlay
         brown = true;
         shitCanvas.gameObject.SetActive(true);
-    }
-
-    public void OnFadeComplete()
-    {
-        // fallback to main menu
-        if (SceneManager.GetSceneByName(levelToLoad).IsValid())
-        {
-            SceneManager.LoadScene(levelToLoad);
-        }
-        else
-        {
-            SceneManager.LoadScene("MainMenu");
-        }
     }
 
     private void StopPlayer()

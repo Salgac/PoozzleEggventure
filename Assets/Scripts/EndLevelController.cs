@@ -28,7 +28,7 @@ public class EndLevelController : MonoBehaviour
         "Tick-tock, egg couldn't beat the clock! A little mess, a lot of eggcitement!",
         "Egg-streme lateness! The toilet waited, the egg hesitated. A comedy of eggrrors!",
         "Time's up, and the egg missed the bowl! An eggstraordinary twist in the plot!",
-        "Late for the egg-sclusive toilet party! Cleanup on aisle egg – eggstreme hilarity!",
+        "Late for the egg-sclusive toilet party! Cleanup on aisle egg - eggstreme hilarity!",
         "The egg's comedy of errors: missed the toilet cue! Eggstremely close shave!",
         "Oh no, egg missed the call of nature! Eggstremely funny, but also eggstremely messy!",
         "Toilet ETA missed! Egg's sense of timing needs a little work. Eggstremely entertaining failure!",

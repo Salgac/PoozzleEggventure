@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoPlayer: {fileID: 2030816887}
-  manager: {fileID: 575510714}
+  faderController: {fileID: 575510714}
   levelToLoad: Level_01
 --- !u!1001 &897713740674992813
 PrefabInstance:
