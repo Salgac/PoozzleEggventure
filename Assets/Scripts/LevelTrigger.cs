@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelTrigger : MonoBehaviour
 {
-    public string levelToLoad;
+    public int levelToLoad;
     public LevelManager manager;
 
     // Start is called before the first frame update
@@ -17,7 +17,7 @@ public class LevelTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Finish! " + SceneManager.GetActiveScene().name);
-            manager.FadeToLevel(levelToLoad);
+            manager.ShowLevelEndScreen(levelToLoad);
         }
     }
 }

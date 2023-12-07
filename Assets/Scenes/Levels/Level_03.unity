@@ -2617,7 +2617,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
 --- !u!114 &1924710121 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3595843420685711592, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4929177871512208503, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
   m_PrefabInstance: {fileID: 1924710120}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -3026,7 +3026,7 @@ PrefabInstance:
       objectReference: {fileID: 1924710121}
     - target: {fileID: -7120194362913280534, guid: 466af9494eeff46be8969c59c190edd1, type: 3}
       propertyPath: levelToLoad
-      value: Level_xx
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1458862894756978610, guid: 466af9494eeff46be8969c59c190edd1, type: 3}
       propertyPath: m_LocalPosition.x

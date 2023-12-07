@@ -22,13 +22,13 @@ public class PlayerMovement : MonoBehaviour
     private bool isTransitioning = false;
 
     private GameObject thiccAssVajicko;
-    private MovementBar movementBar;
+    private MovementController movementBar;
     private List<GameObject> floorList;
 
     void Start()
     {
         thiccAssVajicko = transform.Find("Thicc_ass_vajicko").gameObject;
-        movementBar = FindObjectOfType<MovementBar>();
+        movementBar = FindObjectOfType<MovementController>();
         GameObject[] floor = GameObject.FindGameObjectsWithTag("Collidable");
         floorList = floor.ToList();
         

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MovementBar : MonoBehaviour
+public class MovementController : MonoBehaviour
 {
     private Slider slider;
+
+    public int movesNumber = 0;
 
     private float fillSpeed = 0.5f;
     public float targetProgress = 0;
@@ -38,6 +40,8 @@ public class MovementBar : MonoBehaviour
 
     public void IncrementProgress(int multiplier = 1)
     {
+        movesNumber++;
+
         float progress = slider.maxValue / maxNumberOfMoves;
         targetProgress = slider.value + multiplier * progress;
 
