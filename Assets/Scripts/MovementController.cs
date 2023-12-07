@@ -15,14 +15,18 @@ public class MovementController : MonoBehaviour
 
     private LevelManager levelManager;
 
+    private ParticleSystem[] particleSystems;
+
     private void Awake()
     {
         slider = gameObject.GetComponent<Slider>();
     }
+
     // Start is called before the first frame update
     void Start()
-    {   
+    {
         levelManager = FindObjectOfType<LevelManager>();
+        particleSystems = FindObjectsOfType<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -46,13 +50,8 @@ public class MovementController : MonoBehaviour
         targetProgress = slider.value + multiplier * progress;
 
         // bar is full
-        if (targetProgress >= slider.maxValue - progress)
-        {
-            targetProgress = 0;
-            slider.value = 0;
-
-            // shit overlay
-            levelManager.ApplyShitscreen();
+        if (targetProgress >= slider.maxValue - progress) { 
+            BrownAccident();
         }
     }
 
@@ -65,5 +64,20 @@ public class MovementController : MonoBehaviour
             targetProgress = 0;
             slider.value = 0;
         }
+    }
+
+    private void BrownAccident()
+    {
+        targetProgress = 0;
+        slider.value = 0;
+
+        //play animation
+        foreach (var system in particleSystems)
+        {
+            system.Play(true);
+        }
+
+        // shit overlay
+        levelManager.ApplyShitscreen();
     }
 }
