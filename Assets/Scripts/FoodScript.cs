@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class FoodScript : MonoBehaviour
 {
-    private MovementBar movementBar;
+    private MovementController movementBar;
 
     // Start is called before the first frame update
     void Start()
     {
-        movementBar = FindObjectOfType<MovementBar>();
+        movementBar = FindObjectOfType<MovementController>();
     }
 
     // Update is called once per frame

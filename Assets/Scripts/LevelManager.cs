@@ -3,9 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    public Animator animator;
     private string levelToLoad;
     private PlayerMovement playerMovement;
+    public Component shitCanvas;
+    public Component levelCanvas;
+
+    public MovementController movementBar;
+    public EndLevelController endLevelController;
+    public FaderController faderController;
+
+    private bool brown = false;
 
     // Start is called before the first frame update
     void Start()
@@ -16,14 +23,26 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update() { }
 
+    public void ShowLevelEndScreen(int levelToLoad)
+    {
+        StopPlayer();
+        this.levelToLoad = $"Level_0{levelToLoad}"; // TODO redo this
+
+        endLevelController.SetMenuTexts(levelToLoad - 1, movementBar.movesNumber, brown);
+        levelCanvas.gameObject.SetActive(true);
+    }
+
     public void FadeToLevel(string levelToLoad)
     {
-        if (playerMovement != null)
-        {
-            playerMovement.StopAllCoroutines();
-        }
+        StopPlayer();
         this.levelToLoad = levelToLoad;
-        animator.SetTrigger("FadeOut");
+        faderController.FadeOut(levelToLoad);
+    }
+
+    public void FadeToLevel()
+    {
+        StopPlayer();
+        faderController.FadeOut(levelToLoad);
     }
 
     public void ResetLevel()
@@ -31,8 +50,18 @@ public class LevelManager : MonoBehaviour
         FadeToLevel(SceneManager.GetActiveScene().name);
     }
 
-    public void OnFadeComplete()
+    public void ApplyShitscreen()
     {
-        SceneManager.LoadScene(levelToLoad);
+        // show shit overlay
+        brown = true;
+        shitCanvas.gameObject.SetActive(true);
+    }
+
+    private void StopPlayer()
+    {
+        if (playerMovement != null)
+        {
+            playerMovement.StopAllCoroutines();
+        }
     }
 }

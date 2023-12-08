@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MovementBar : MonoBehaviour
+public class MovementController : MonoBehaviour
 {
     private Slider slider;
+
+    public int movesNumber = 0;
 
     private float fillSpeed = 0.5f;
     public float targetProgress = 0;
@@ -13,14 +15,18 @@ public class MovementBar : MonoBehaviour
 
     private LevelManager levelManager;
 
+    private ParticleSystem[] particleSystems;
+
     private void Awake()
     {
         slider = gameObject.GetComponent<Slider>();
     }
+
     // Start is called before the first frame update
     void Start()
-    {   
+    {
         levelManager = FindObjectOfType<LevelManager>();
+        particleSystems = FindObjectsOfType<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -38,13 +44,14 @@ public class MovementBar : MonoBehaviour
 
     public void IncrementProgress(int multiplier = 1)
     {
+        movesNumber++;
+
         float progress = slider.maxValue / maxNumberOfMoves;
         targetProgress = slider.value + multiplier * progress;
-        if (targetProgress >= slider.maxValue - progress)
-        {
-            targetProgress = 0;
-            slider.value = 0;
-            levelManager.ResetLevel();
+
+        // bar is full
+        if (targetProgress >= slider.maxValue - progress) { 
+            BrownAccident();
         }
     }
 
@@ -57,5 +64,20 @@ public class MovementBar : MonoBehaviour
             targetProgress = 0;
             slider.value = 0;
         }
+    }
+
+    private void BrownAccident()
+    {
+        targetProgress = 0;
+        slider.value = 0;
+
+        //play animation
+        foreach (var system in particleSystems)
+        {
+            system.Play(true);
+        }
+
+        // shit overlay
+        levelManager.ApplyShitscreen();
     }
 }

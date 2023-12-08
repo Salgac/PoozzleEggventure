@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
 
     public List<Component> menuContainers;
 
-    public LevelManager manager;
+    public FaderController faderController;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour
 
     private void PlayClicked()
     {
-        manager.FadeToLevel("VideoPlayer"); // TODO: change to cutscene when ready
+        faderController.FadeOut("VideoPlayer"); // TODO: change to cutscene when ready
     }
 
     private void LevelsClicked()

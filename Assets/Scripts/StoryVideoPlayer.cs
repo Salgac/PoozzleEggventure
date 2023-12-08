@@ -4,7 +4,7 @@ using UnityEngine.Video;
 public class StoryVideoPlayer : MonoBehaviour
 {
     public VideoPlayer videoPlayer;
-    public LevelManager manager;
+    public FaderController faderController;
     public string levelToLoad;
 
     private long videoLength;
@@ -26,6 +26,6 @@ public class StoryVideoPlayer : MonoBehaviour
 
     void EndReached()
     {
-        manager.FadeToLevel(levelToLoad);
+        faderController.FadeOut(levelToLoad);
     }
 }
