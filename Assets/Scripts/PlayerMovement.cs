@@ -25,6 +25,10 @@ public class PlayerMovement : MonoBehaviour
     private MovementController movementBar;
     private List<GameObject> floorList;
 
+    public bool NeedToTeleport = false;
+    public Vector3 TeleportTo;
+    public int DisabledPortal = 0;
+
     void Start()
     {
         movementBar = FindObjectOfType<MovementController>();
@@ -61,6 +65,13 @@ public class PlayerMovement : MonoBehaviour
         }
         
         if (!isTransitioning) {
+            if (NeedToTeleport)
+            {
+                transform.position = TeleportTo;
+                NeedToTeleport = false;
+                TeleportTo = Vector3.zero;
+                DisabledPortal = 1;
+            }
             // 2 types of movement
             if (standing && KeyBuffer.Count > 0)
             {
@@ -153,6 +164,7 @@ public class PlayerMovement : MonoBehaviour
             }
             isTransitioning = false;
             transform.position = endPosition;
+            DisabledPortal = 0;
             CheckUnder();
         }
     }
@@ -206,6 +218,7 @@ public class PlayerMovement : MonoBehaviour
         }
         isTransitioning = false;
         CheckUnder();
+        DisabledPortal = 0;
     }
     private IEnumerator StandUp()
     {
@@ -249,6 +262,7 @@ public class PlayerMovement : MonoBehaviour
         }
         isTransitioning = false;
         CheckUnder();
+        DisabledPortal = 0;
         yield return false;
     }
 
@@ -278,6 +292,7 @@ public class PlayerMovement : MonoBehaviour
         isTransitioning = false;
         transform.position = endPosition;
         transform.rotation = endRotation;
+        DisabledPortal = 0;
         KeyBuffer.Clear();
     }
 
