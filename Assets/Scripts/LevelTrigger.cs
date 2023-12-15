@@ -5,6 +5,8 @@ public class LevelTrigger : MonoBehaviour
 {
     public int levelToLoad;
     public LevelManager manager;
+    public AudioSource audioSource;
+    public AudioClip successSound;
 
     // Start is called before the first frame update
     void Start() { }
@@ -17,6 +19,7 @@ public class LevelTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Finish! " + SceneManager.GetActiveScene().name);
+            audioSource.PlayOneShot(successSound);
             manager.ShowLevelEndScreen(levelToLoad);
         }
     }

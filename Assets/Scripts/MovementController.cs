@@ -17,6 +17,9 @@ public class MovementController : MonoBehaviour
 
     private ParticleSystem[] particleSystems;
 
+    public AudioSource audioSource;
+    public AudioClip accidentSound;
+
     private void Awake()
     {
         slider = gameObject.GetComponent<Slider>();
@@ -52,6 +55,7 @@ public class MovementController : MonoBehaviour
         // bar is full
         if (targetProgress >= slider.maxValue - progress) { 
             BrownAccident();
+            audioSource.PlayOneShot(accidentSound);
         }
     }
 

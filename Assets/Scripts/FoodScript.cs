@@ -5,6 +5,8 @@ using UnityEngine;
 public class FoodScript : MonoBehaviour
 {
     private MovementController movementBar;
+    public AudioSource audioSource;
+    public AudioClip eatSound;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,7 @@ public class FoodScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             movementBar.IncrementProgress(3);
+            audioSource.PlayOneShot(eatSound);
             gameObject.SetActive(false);
         }
     }
