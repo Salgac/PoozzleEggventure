@@ -105,4 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee951c20f88d1478c8029dd32377f15d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelToLoad: 
+  levelToLoad: 0
+  manager: {fileID: 0}
+  audioSource: {fileID: 0}
+  successSound: {fileID: 8300000, guid: 2839cbb65bd58c64d8026e22aa48e9bf, type: 3}

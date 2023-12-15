@@ -390,5 +390,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ee6bf108ee43e42a887d9fc7ba6060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movesNumber: 0
   targetProgress: 0
   maxNumberOfMoves: 5
+  audioSource: {fileID: 0}
+  accidentSound: {fileID: 8300000, guid: 5ddad029dee0b194bb81a652024398fa, type: 3}
