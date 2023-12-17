@@ -97,6 +97,10 @@ PrefabInstance:
       propertyPath: source
       value: 
       objectReference: {fileID: 5054108494960576872}
+    - target: {fileID: 9114765943327780156, guid: d64f9dd17f5e348bbb6d3c32ebdf76d4, type: 3}
+      propertyPath: brownMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 84bee40206c1e44858eafd38bbd3d388, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
