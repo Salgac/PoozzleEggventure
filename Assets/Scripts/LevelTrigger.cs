@@ -19,8 +19,18 @@ public class LevelTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Finish! " + SceneManager.GetActiveScene().name);
+            HappyEnd();
             audioSource.PlayOneShot(successSound);
             manager.ShowLevelEndScreen(levelToLoad);
+        }
+    }
+
+    private void HappyEnd()
+    {
+        ParticleSystem[] particleSystems = FindObjectsOfType<ParticleSystem>();
+        foreach (var system in particleSystems)
+        {
+            system.Play(true);
         }
     }
 }
