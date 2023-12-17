@@ -20,9 +20,13 @@ public class MovementController : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip accidentSound;
 
+    public AudioClip backgroundMusic;
+
     private void Awake()
     {
         slider = gameObject.GetComponent<Slider>();
+
+
     }
 
     // Start is called before the first frame update
@@ -55,6 +59,19 @@ public class MovementController : MonoBehaviour
         // bar is full
         if (targetProgress >= slider.maxValue - progress) { 
             BrownAccident();
+
+            audioSource.Stop();
+            try
+            {
+                audioSource.clip = backgroundMusic;
+                audioSource.Play();
+            } catch
+            {
+                audioSource.Play();
+            }
+            
+            
+
             audioSource.PlayOneShot(accidentSound);
         }
     }

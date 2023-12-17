@@ -2657,6 +2657,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Audio Container
       objectReference: {fileID: 0}
+    - target: {fileID: 7473877956976626504, guid: afa7f88e84e51944bb122e932334112c, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8679093eca931e64589a36cdb3c6dc4e, type: 3}
     - target: {fileID: 8084332732245809268, guid: afa7f88e84e51944bb122e932334112c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
