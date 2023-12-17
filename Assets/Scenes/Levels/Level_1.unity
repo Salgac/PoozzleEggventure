@@ -923,6 +923,10 @@ PrefabInstance:
       propertyPath: backgroundMusic
       value: 
       objectReference: {fileID: 8300000, guid: b4a8c5f12cb4dc5488ef28c58a5b39d5, type: 3}
+    - target: {fileID: 6969495772974690656, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
+      propertyPath: maxNumberOfMoves
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7514389870974491262, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 686.87714

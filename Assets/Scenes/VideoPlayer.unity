@@ -403,7 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   videoPlayer: {fileID: 2030816887}
   faderController: {fileID: 575510714}
-  levelToLoad: Level_01
+  levelToLoad: Level_1
 --- !u!1001 &897713740674992813
 PrefabInstance:
   m_ObjectHideFlags: 0
