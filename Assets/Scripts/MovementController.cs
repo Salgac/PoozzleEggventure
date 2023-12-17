@@ -16,6 +16,7 @@ public class MovementController : MonoBehaviour
     private LevelManager levelManager;
 
     private ParticleSystem[] particleSystems;
+    public Material brownMaterial;
 
     public AudioSource audioSource;
     public AudioClip accidentSound;
@@ -25,8 +26,6 @@ public class MovementController : MonoBehaviour
     private void Awake()
     {
         slider = gameObject.GetComponent<Slider>();
-
-
     }
 
     // Start is called before the first frame update
@@ -57,7 +56,8 @@ public class MovementController : MonoBehaviour
         targetProgress = slider.value + multiplier * progress;
 
         // bar is full
-        if (targetProgress >= slider.maxValue - progress) { 
+        if (targetProgress >= slider.maxValue - progress)
+        {
             BrownAccident();
 
             audioSource.Stop();
@@ -65,12 +65,11 @@ public class MovementController : MonoBehaviour
             {
                 audioSource.clip = backgroundMusic;
                 audioSource.Play();
-            } catch
+            }
+            catch
             {
                 audioSource.Play();
             }
-            
-            
 
             audioSource.PlayOneShot(accidentSound);
         }
@@ -97,6 +96,10 @@ public class MovementController : MonoBehaviour
         {
             system.Play(true);
         }
+
+        // change material
+        var player = FindObjectOfType<PlayerMovement>().thiccAssVajicko;
+        player.GetComponentInChildren<Renderer>().material = brownMaterial;
 
         // shit overlay
         levelManager.ApplyShitscreen();
