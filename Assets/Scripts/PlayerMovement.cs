@@ -74,6 +74,10 @@ public class PlayerMovement : MonoBehaviour
         {
             KeyBuffer.Add(KeyCode.D);
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(Reset());
+        }
 
         // Perform animation
         if (!isTransitioning) {
