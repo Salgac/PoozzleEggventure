@@ -22,7 +22,7 @@ public class LevelsButtons : MonoBehaviour
             for (int j = 0; j < 4; j++)
             {
                 Vector3 pos =
-                    canvas.transform.position + new Vector3(-350 + j * 60, 100 + i * -60, 0);
+                    canvas.transform.position + new Vector3(-150 + j * 60, 100 + i * -60, 0);
                 SetupButton(n++, pos);
             }
         }
