@@ -36,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 TeleportTo;
     public int DisabledPortal = 0;
 
+    public AudioSource audioSource;
+    public AudioClip teleportSound, fallSound, incrementSound;
+
     // Set all needed variables - finding objects...
     void Start()
     {
@@ -77,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
             // Teleport
             if (NeedToTeleport)
             {
+                audioSource.PlayOneShot(teleportSound);
                 transform.position = TeleportTo;
                 NeedToTeleport = false;
                 TeleportTo = Vector3.zero;
@@ -128,6 +132,7 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         movementBar.IncrementProgress();
+                        audioSource.PlayOneShot(incrementSound);
                         KeyBuffer.RemoveAt(0);
                     }
                 }
@@ -149,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
         // Calculate final position and rotation
         if (KeyBuffer.Count > 0)
         {
+            audioSource.PlayOneShot(incrementSound);
             switch (KeyBuffer[0])
             {
                 case (KeyCode.W):
@@ -240,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
         if (KeyBuffer.Count > 0)
         {
             movementBar.IncrementProgress();
+            audioSource.PlayOneShot(incrementSound);
             KeyBuffer.RemoveAt(0);
         }
         isTransitioning = false;
@@ -291,6 +298,7 @@ public class PlayerMovement : MonoBehaviour
             if (KeyBuffer.Count > 0)
             {
                 movementBar.IncrementProgress();
+                audioSource.PlayOneShot(incrementSound);
                 KeyBuffer.RemoveAt(0);
             }
         }
@@ -394,6 +402,7 @@ public class PlayerMovement : MonoBehaviour
             KeyBuffer.Clear();
             gameObject.GetComponent<Rigidbody>().useGravity = true;
             StartCoroutine(Reset());
+            audioSource.PlayOneShot(fallSound);
         }
             
         

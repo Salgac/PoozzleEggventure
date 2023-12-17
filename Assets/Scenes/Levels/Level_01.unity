@@ -902,6 +902,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6969495772974690656, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 62682775}
+    - target: {fileID: 6969495772974690656, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
+      propertyPath: accidentSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 5ddad029dee0b194bb81a652024398fa, type: 3}
+    - target: {fileID: 6969495772974690656, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
+      propertyPath: backgroundMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: b4a8c5f12cb4dc5488ef28c58a5b39d5, type: 3}
     - target: {fileID: 7514389870974491262, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 686.87714
@@ -954,6 +966,9 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 8290310966520904172, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7514389870974491262, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 62682774}
     - targetCorrespondingSourceObject: {fileID: 4610633085390953013, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1272085592}
