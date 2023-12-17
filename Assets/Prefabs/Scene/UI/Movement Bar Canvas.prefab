@@ -393,5 +393,7 @@ MonoBehaviour:
   movesNumber: 0
   targetProgress: 0
   maxNumberOfMoves: 5
+  brownMaterial: {fileID: 2100000, guid: 84bee40206c1e44858eafd38bbd3d388, type: 2}
   audioSource: {fileID: 0}
   accidentSound: {fileID: 8300000, guid: 5ddad029dee0b194bb81a652024398fa, type: 3}
+  backgroundMusic: {fileID: 0}
