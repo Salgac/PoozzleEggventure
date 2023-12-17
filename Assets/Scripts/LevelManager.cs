@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
     public void ShowLevelEndScreen(int levelToLoad)
     {
         StopPlayer();
-        this.levelToLoad = $"Level_0{levelToLoad}"; // TODO redo this
+        this.levelToLoad = $"Level_{levelToLoad}";
 
         endLevelController.SetMenuTexts(levelToLoad - 1, movementBar.movesNumber, brown);
         levelCanvas.gameObject.SetActive(true);
