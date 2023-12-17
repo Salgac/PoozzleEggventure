@@ -12,7 +12,8 @@ public class PortalScript : MonoBehaviour
         GameObject[] OtherPortal;
         OtherPortal = GameObject.FindGameObjectsWithTag("Portal");
         player = GameObject.FindGameObjectWithTag("Player");
-
+        Debug.Log(OtherPortal.Length);
+        Debug.Log(player.transform.position);
         foreach (GameObject i in OtherPortal)
         {
             if (gameObject != i)
@@ -34,10 +35,11 @@ public class PortalScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Need to be teleported");
-        if (player.GetComponentInChildren<PlayerMovement>().DisabledPortal == 0)
+        Debug.Log(player.GetComponentInParent<PlayerMovement>());
+        if (player.GetComponentInParent<PlayerMovement>().DisabledPortal == 0)
         {
-            player.GetComponentInChildren<PlayerMovement>().NeedToTeleport = true;
-            player.GetComponentInChildren<PlayerMovement>().TeleportTo = OtherPortalLocation;
+            player.GetComponentInParent<PlayerMovement>().NeedToTeleport = true;
+            player.GetComponentInParent<PlayerMovement>().TeleportTo = OtherPortalLocation;
         }
         
 
