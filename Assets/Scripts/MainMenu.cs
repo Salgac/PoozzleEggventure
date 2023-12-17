@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
 {
     public Button playButton;
     public Button levelsButton;
-    public Button settingsButton;
+    public Button creditsButton;
     public Button backButton;
 
     public List<Component> menuContainers;
@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
     {
         playButton.onClick.AddListener(PlayClicked);
         levelsButton.onClick.AddListener(LevelsClicked);
-        settingsButton.onClick.AddListener(SettingsClicked);
+        creditsButton.onClick.AddListener(CreditsClicked);
         backButton.onClick.AddListener(BackClicked);
     }
 
@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour
 
     private void PlayClicked()
     {
-        faderController.FadeOut("VideoPlayer"); // TODO: change to cutscene when ready
+        faderController.FadeOut("VideoPlayer");
     }
 
     private void LevelsClicked()
@@ -38,11 +38,11 @@ public class MainMenu : MonoBehaviour
         // TODO: generate buttons from levels
     }
 
-    private void SettingsClicked()
+    private void CreditsClicked()
     {
         SelectContainer(2);
 
-        //TODO: implement settings menu
+        //TODO: implement credits menu
     }
 
     private void BackClicked()
