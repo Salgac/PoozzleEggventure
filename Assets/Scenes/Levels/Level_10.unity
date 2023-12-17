@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5348,6 +5348,10 @@ PrefabInstance:
       propertyPath: incrementSound
       value: 
       objectReference: {fileID: 8300000, guid: 78e61a8ad11dcfd43b5f1a213ffd3991, type: 3}
+    - target: {fileID: 1151431373589217569, guid: f930fc5149fe64021bf03499c942f0e6, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1119724353}
     - target: {fileID: 3584873759917789973, guid: f930fc5149fe64021bf03499c942f0e6, type: 3}
       propertyPath: manager
       value: 
@@ -5358,7 +5362,7 @@ PrefabInstance:
       objectReference: {fileID: 1119724353}
     - target: {fileID: 3584873759917789973, guid: f930fc5149fe64021bf03499c942f0e6, type: 3}
       propertyPath: levelToLoad
-      value: 14
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3585493959339850217, guid: f930fc5149fe64021bf03499c942f0e6, type: 3}
       propertyPath: m_LocalPosition.x

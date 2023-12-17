@@ -19,7 +19,7 @@ public class LevelsButtons : MonoBehaviour
         int n = 1;
         for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 5; j++)
+            for (int j = 0; j < 4; j++)
             {
                 Vector3 pos =
                     canvas.transform.position + new Vector3(-350 + j * 60, 100 + i * -60, 0);
@@ -49,6 +49,6 @@ public class LevelsButtons : MonoBehaviour
 
     private void ButtonClicked(int levelNumber)
     {
-        faderController.FadeOut($"Level_0{levelNumber}");
+        faderController.FadeOut($"Level_{levelNumber}");
     }
 }
