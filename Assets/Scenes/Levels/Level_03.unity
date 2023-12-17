@@ -927,6 +927,10 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 1924710121}
+    - target: {fileID: 5085523327912306283, guid: 1e3982ce9f7b84ff7bd25d6e8bab87f2, type: 3}
+      propertyPath: levelToLoad
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5469732796520515478, guid: 1e3982ce9f7b84ff7bd25d6e8bab87f2, type: 3}
       propertyPath: m_Name
       value: Objective
