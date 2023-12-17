@@ -11,6 +11,7 @@ public class EndLevelController : MonoBehaviour
     public TextMeshProUGUI brownText;
     public Button menuButton;
     public Button nextButton;
+    public Button resetButton;
     public LevelManager manager;
 
     private readonly List<string> splashes = new List<string>
@@ -52,6 +53,7 @@ public class EndLevelController : MonoBehaviour
     {
         menuButton.onClick.AddListener(MenuClicked);
         nextButton.onClick.AddListener(NextClicked);
+        resetButton.onClick.AddListener(ResetClicked);
     }
 
     // Update is called once per frame
@@ -67,6 +69,11 @@ public class EndLevelController : MonoBehaviour
             brownText.gameObject.SetActive(true);
             brownText.text = splashes[Random.Range(0, splashes.Count - 1)];
         }
+
+        if(level == 12)
+        {
+            nextButton.gameObject.SetActive(false);
+        }
     }
 
     private void MenuClicked()
@@ -77,5 +84,10 @@ public class EndLevelController : MonoBehaviour
     private void NextClicked()
     {
         manager.FadeToLevel();
+    }
+
+    private void ResetClicked()
+    {
+        manager.ResetLevel();
     }
 }
