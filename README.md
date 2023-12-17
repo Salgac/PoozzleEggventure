@@ -5,6 +5,8 @@ Welcome to Poozle Eggventure, a humorous and quirky game where an egg embarks on
 
 A game by a group of students for Unity game making course - NAVPH. 
 
+![Game menu screenshot](menu.jpg)
+
 ## Gameplay
 
 The objective of the game is to guide your egg through each level and ensure it reaches the toilet before time runs out. If your egg doesn't make it in time, well, let's just say there might be a surprise waiting!
@@ -35,7 +37,10 @@ The objective of the game is to guide your egg through each level and ensure it 
 
 ## Releases
 
-TODO
+- Windows:  [Poozle_Eggventure.exe](https://www.dropbox.com/scl/fi/jd82k8i2ti5l49j9a4w8r/Poozzle_Eggventure.exe?rlkey=vrnrrce9jwtsft46gx5acdppx&dl=0)
+- Mac:  [PoozleEggventure_v1.app](https://www.dropbox.com/scl/fo/zp0h0wc123qrsvczttgom/h?rlkey=hmeals7cizo34k81rdhj6odjo&dl=0)
+
+Video Showcase: [Youtube](https://youtu.be/RRZzyczjr-M)
 
 ## License
 
