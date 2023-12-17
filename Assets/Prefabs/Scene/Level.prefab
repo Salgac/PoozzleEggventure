@@ -107,15 +107,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1383274984891107206, guid: d64f9dd17f5e348bbb6d3c32ebdf76d4, type: 3}
   m_PrefabInstance: {fileID: 2217662381035576412}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3595843420685711592 stripped
+--- !u!114 &4821936013577987756 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3396198615117128884, guid: d64f9dd17f5e348bbb6d3c32ebdf76d4, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6641768685971569392, guid: d64f9dd17f5e348bbb6d3c32ebdf76d4, type: 3}
   m_PrefabInstance: {fileID: 2217662381035576412}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98c1f549b60b04959b6aec61fb680028, type: 3}
+  m_Script: {fileID: 11500000, guid: bd1460216b4e24785b5d2674b660fb66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4652718857179995360
@@ -130,10 +130,10 @@ PrefabInstance:
       propertyPath: blurConfig
       value: 
       objectReference: {fileID: 11400000, guid: 45ac4b3d5f9dfc746a89d180929cc72e, type: 2}
-    - target: {fileID: 4769518722649399363, guid: f930fc5149fe64021bf03499c942f0e6, type: 3}
+    - target: {fileID: 3584873759917789973, guid: f930fc5149fe64021bf03499c942f0e6, type: 3}
       propertyPath: manager
       value: 
-      objectReference: {fileID: 3595843420685711592}
+      objectReference: {fileID: 4821936013577987756}
     - target: {fileID: 5230353584315910775, guid: f930fc5149fe64021bf03499c942f0e6, type: 3}
       propertyPath: m_Name
       value: Level Container
