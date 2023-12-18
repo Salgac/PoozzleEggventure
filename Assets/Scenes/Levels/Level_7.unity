@@ -4929,6 +4929,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3365079129487707960, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4994211182332018672, guid: bf4055ae4450f4c159934cae708999c3, type: 3}
       propertyPath: fallSound
       value: 
